@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,13 +11,12 @@ namespace MovieOnDemand.Models
     public class Movie
     {
         [Key]
-        public int MovieId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
-        public string Discription { get; set; }
+        public string Description { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public double Price { get; set; }
-        public string CinemaName { get; set; }
         public MovieCategory MovieCategory { get; set; }
         public string ImageUrl { get; set; }
 
@@ -25,11 +25,13 @@ namespace MovieOnDemand.Models
         //Cinema Relationships
         public Cinema Cinema { get; set; }
         //EF is consider it as an foreign key
+        [ForeignKey("CinemaId")]
         public int CinemaId { get; set; }
 
         //Producer Relationships
         public Producer Producer { get; set; }
         //EF is consider it as an foreign key
-        public int ProducId { get; set; }
+        [ForeignKey("ProducerId")]
+        public int ProducerId { get; set; }
     }
 }

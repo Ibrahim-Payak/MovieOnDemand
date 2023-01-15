@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MovieOnDemand.ApplicationDbContext;
 
 namespace MovieOnDemand.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230105175332_changesInMovie")]
+    partial class changesInMovie
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,7 +23,7 @@ namespace MovieOnDemand.Migrations
 
             modelBuilder.Entity("MovieOnDemand.Models.Actor", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ActorId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -35,7 +37,7 @@ namespace MovieOnDemand.Migrations
                     b.Property<string>("ProfilePictureUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ActorId");
 
                     b.ToTable("Actors");
                 });
@@ -57,7 +59,7 @@ namespace MovieOnDemand.Migrations
 
             modelBuilder.Entity("MovieOnDemand.Models.Cinema", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CinemaId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -71,14 +73,14 @@ namespace MovieOnDemand.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("CinemaId");
 
                     b.ToTable("Cinemas");
                 });
 
             modelBuilder.Entity("MovieOnDemand.Models.Movie", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("MovieId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -110,7 +112,7 @@ namespace MovieOnDemand.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.HasKey("MovieId");
 
                     b.HasIndex("CinemaId");
 
@@ -121,7 +123,7 @@ namespace MovieOnDemand.Migrations
 
             modelBuilder.Entity("MovieOnDemand.Models.Producer", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ProducerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -135,7 +137,7 @@ namespace MovieOnDemand.Migrations
                     b.Property<string>("ProfilePictureUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProducerId");
 
                     b.ToTable("Producers");
                 });

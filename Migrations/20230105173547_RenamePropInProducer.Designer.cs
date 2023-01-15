@@ -10,8 +10,8 @@ using MovieOnDemand.ApplicationDbContext;
 namespace MovieOnDemand.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230105122728_AddDataToDb")]
-    partial class AddDataToDb
+    [Migration("20230105173547_RenamePropInProducer")]
+    partial class RenamePropInProducer
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -67,7 +67,7 @@ namespace MovieOnDemand.Migrations
                     b.Property<string>("CinemaLogo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Discription")
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -91,7 +91,7 @@ namespace MovieOnDemand.Migrations
                     b.Property<string>("CinemaName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Discription")
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("EndDate")
@@ -109,10 +109,7 @@ namespace MovieOnDemand.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<int>("ProducId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProducerId")
+                    b.Property<int>("ProducerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
@@ -177,7 +174,9 @@ namespace MovieOnDemand.Migrations
 
                     b.HasOne("MovieOnDemand.Models.Producer", "Producer")
                         .WithMany("Movies")
-                        .HasForeignKey("ProducerId");
+                        .HasForeignKey("ProducerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Cinema");
 

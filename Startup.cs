@@ -6,6 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MovieOnDemand.ApplicationDbContext;
+using MovieOnDemand.Data;
+using MovieOnDemand.Data.Interface;
+using MovieOnDemand.Data.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +30,8 @@ namespace MovieOnDemand
         {
             //configure DbContext
             services.AddDbContext<AppDbContext>(o => o.UseSqlServer(Configuration.GetConnectionString("Default")));
+            //configure service
+            services.AddScoped<IActorsService, ActorsService>();
 
             services.AddControllersWithViews();
         }
@@ -57,6 +62,8 @@ namespace MovieOnDemand
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            AppDbInitializer.Seed(app); //here app represent IConfiguration
         }
     }
 }

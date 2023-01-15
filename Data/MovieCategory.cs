@@ -10,7 +10,8 @@ namespace MovieOnDemand.Data
         Action = 1,
         Comedy,
         Drama,
-        Documentory,
-        Horror
+        Documentary,
+        Horror,
+        Biography
     }
 }
