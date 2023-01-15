@@ -1,0 +1,41 @@
+﻿@model Producer;
+
+@{
+    ViewData["Title"] = "Producer Delete Confirm Page";
+}
+
+<br />
+<h2 class="text-info text-center">@Model.FullName Details</h2>
+<br />
+
+<div class="col-6 offset-3">
+    <div class="form-group text-center">
+        <img id="ProfilePicturePreview" class="rounded-circle" />
+    </div>
+    <div class="form-group">
+        <label asp-for="ProfilePictureUrl">Profile Picture URL</label>
+        <input class="form-control disabled" asp-for="ProfilePictureUrl">
+    </div>
+    <div class="form-group">
+        <label asp-for="FullName">Full Name</label>
+        <input class="form-control disabled" asp-for="FullName">
+    </div>
+    <div class="form-group">
+        <label asp-for="Bio">Bio</label>
+        <input class="form-control disabled" asp-for="Bio">
+    </div>
+    <a class="btn btn-primary float-left text-white" asp-action="Index">Show All</a>
+    <form method="post">
+        <input type="hidden" asp-for="Id"/>
+        <input type="submit" class="btn btn-danger float-right" asp-action="Delete" value="Confirm"/>
+    </form>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var output = document.getElementById('ProfilePicturePreview');
+            output.src = $('#ProfilePictureUrl').val();
+        })
+    </script>
+}

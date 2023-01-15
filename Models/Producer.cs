@@ -11,10 +11,17 @@ namespace MovieOnDemand.Models
     {
         [Key]
         public int Id { get; set; }
+
         [Display(Name ="Profile Picture")]
+        [Required(ErrorMessage = "Profile Picture is required")]
         public string ProfilePictureUrl { get; set; }
+
         [Display(Name = "Actor Name")]
+        [Required(ErrorMessage = "Name is required")]
+        [StringLength(50, MinimumLength = 3, ErrorMessage ="Name should be b/w 3 and 50 characters")]
         public string FullName { get; set; }
+
+        [Required(ErrorMessage = "Provide Bio")]
         public string Bio { get; set; }
 
         //Relationships

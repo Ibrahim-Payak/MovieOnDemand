@@ -70,7 +70,7 @@ namespace MovieOnDemand.Controllers
             {
                 return View(actor);
             }
-            await _service.UpdateAsync(id, actor);
+            await _service.UpdateAsync(actor);
             return RedirectToAction(nameof(Index));
         }
 

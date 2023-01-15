@@ -43,7 +43,7 @@ namespace MovieOnDemand.Data.Base
             return result;
         }
 
-        public async Task UpdateAsync(int id, T t)
+        public async Task UpdateAsync(T t)
         {
             EntityEntry entityEntry = _db.Entry<T>(t);
             entityEntry.State = EntityState.Modified;

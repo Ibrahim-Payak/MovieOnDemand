@@ -11,7 +11,7 @@ namespace MovieOnDemand.Data.Base
 
         Task AddAsync(T t);
 
-        Task UpdateAsync(int id, T t);
+        Task UpdateAsync(T t);
 
         Task DeleteAsync(int id);
 
