@@ -41,7 +41,7 @@ namespace MovieOnDemand.Controllers
         }
 
         //Get Req.: Actor/View/1
-        public async Task<IActionResult> View(int id)
+        public async Task<IActionResult> Details(int id)
         {
             Actor actor = await _service.GetByIdAsync(id);
             if (actor == null)
@@ -64,7 +64,7 @@ namespace MovieOnDemand.Controllers
 
         //post update method
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, Actor actor)
+        public async Task<IActionResult> Edit(Actor actor)
         {
             if (!ModelState.IsValid)
             {

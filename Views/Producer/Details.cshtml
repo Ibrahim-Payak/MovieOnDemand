@@ -24,8 +24,8 @@
         <label asp-for="Bio">Bio</label>
         <input class="form-control disabled" asp-for="Bio">
     </div>
-    <a class="btn btn-primary float-left text-white" asp-action="Index">Show All</a>
-    <a class="btn btn-success float-right text-white" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    <a class="btn btn-secondary float-left text-white" asp-action="Index"><i class="bi bi-card-list"></i> Show All</a>
+    <a class="btn btn-success float-right text-white" asp-action="Edit" asp-route-id="@Model.Id"><i class="bi bi-pencil-square"></i> Edit</a>
 </div>
 
 @section Scripts{

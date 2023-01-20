@@ -4,6 +4,7 @@ using MovieOnDemand.ApplicationDbContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace MovieOnDemand.Data.Base
@@ -48,6 +49,13 @@ namespace MovieOnDemand.Data.Base
             EntityEntry entityEntry = _db.Entry<T>(t);
             entityEntry.State = EntityState.Modified;
             await _db.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<T>> GetAllAsync(params Expression<Func<T, object>>[] expression)
+        {
+            IQueryable<T> query = _db.Set<T>();
+            query = expression.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+            return await query.ToListAsync();
         }
     }
 }

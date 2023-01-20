@@ -33,25 +33,25 @@
                             </div>
                         </li>
                     </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search for movie" aria-label="Search">
+                    <form class="form-inline my-2 my-lg-0" asp-controller="Movie" asp-action="Index">
+                        <input name="searchString" class="form-control mr-sm-2" type="text" placeholder="Search for movie" aria-label="Search" />
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
-                        &nbsp;
-                        &nbsp;
-                        <div class="dropdown">
-                            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="bi bi-person-badge"></i> Hello Admin
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </div>
-                        &nbsp;
-                        &nbsp;
-                        <button class="btn btn-outline-danger" type="button"><i class="bi bi-box-arrow-right"></i> Log Out</button>
                     </form>
+
+                    <ul class="navbar-nav">
+                        @await Component.InvokeAsync("ShoppingCartSummary")
+                    </ul>
+
+                    <div class="dropdown mx-2">
+                        <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="bi bi-person-badge"></i> Hello User
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" asp-controller="Order" asp-action="Index"><i class="bi bi-list"></i> Orders</a>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-outline-danger" type="button"><i class="bi bi-box-arrow-right"></i> Log Out</button>
                 </div>
             </div>
         </nav>

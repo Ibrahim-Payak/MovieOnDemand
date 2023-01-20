@@ -23,12 +23,14 @@
     <div class="form-group">
         <label asp-for="Bio">Bio</label>
         <input class="form-control disabled" asp-for="Bio">
+    </div>    
+    <div class="form-group">
+        <a class="btn btn-secondary float-left text-white" asp-action="Index"><i class="bi bi-card-list"></i> Show All</a>
+        <form method="post">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" class="btn btn-danger float-right" asp-action="Delete" value="Confirm" />
+        </form>
     </div>
-    <a class="btn btn-primary float-left text-white" asp-action="Index">Show All</a>
-    <form method="post">
-        <input type="hidden" asp-for="Id"/>
-        <input type="submit" class="btn btn-danger float-right" asp-action="Delete" value="Confirm"/>
-    </form>
 </div>
 
 @section Scripts{

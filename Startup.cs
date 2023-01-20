@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +10,7 @@ using MovieOnDemand.ApplicationDbContext;
 using MovieOnDemand.Data;
 using MovieOnDemand.Data.Interface;
 using MovieOnDemand.Data.Services;
+using MovieOnDemand.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +35,16 @@ namespace MovieOnDemand
             //configure service
             services.AddScoped<IActorsService, ActorsService>();
             services.AddScoped<IProducersService, ProducersService>();
+            services.AddScoped<ICinemasService, CinemasService>();
+            services.AddScoped<IMoviesService, MoviesService>();
+            services.AddScoped<IOrderService, OrderService>();
+
+            //confiure HttpContextAccessor (sicne we are using this service in shopping cart)
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped(sc => ShoppingCart.GetShoppingCart(sc));
+
+            //to configured session
+            services.AddSession();
 
             services.AddControllersWithViews();
         }
@@ -52,7 +64,7 @@ namespace MovieOnDemand
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthorization();

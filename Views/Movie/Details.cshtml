@@ -1,0 +1,93 @@
+﻿@model Movie; 
+@*here Movie is ViewModel*@
+@{
+    ViewData["Title"] = "Movie Details";
+}
+
+<br />
+<h2 class="text-info text-center">@Model.Name Movie Details</h2>
+<br />
+
+<div class="row text-center">
+    <div class="col-md-8 offset-4">
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+                <div class="col-md-12">
+                    <div class="card-header text-white bg-info">
+                        <p class="card-text">
+                            <h5 class="card-title">
+                                @Model.Name
+                            </h5>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <img src="@Model.ImageUrl" style="width:100%" alt="@Model.Name">
+                </div>
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <p class="card-text">@Model.Description</p>
+                        <p class="card-text">
+                            <b>Cinema: </b>
+                            <a asp-controller="Cinema" asp-action="Details" asp-route-id="@Model.CinemaId">
+                                @Model.Cinema.Name
+                            </a>
+                        </p>
+                        <p class="card-text">
+                            <b>Producer: </b>
+                            <a asp-controller="Producer" asp-action="Details" asp-route-id="@Model.ProducerId">
+                                @Model.Producer.FullName
+                            </a>
+                        </p>
+                        <p class="card-text"><b>Category: </b>@Model.MovieCategory</p>
+                        <p class="card-text"><b>Start Date: </b>@Model.StartDate.ToString("dd MMM yy")</p>
+                        <p class="card-text"><b>End Date: </b>@Model.EndDate.ToString("dd MMM yy")</p>
+                        <p class="card-text ">
+                            <b>Status: </b>
+                            @if (DateTime.Now >= Model.StartDate && DateTime.Now <= Model.EndDate)
+                            {
+                                <span class="badge badge-success text-white">AVAILABLE</span>
+                            }
+                            else if (DateTime.Now < Model.StartDate)
+                            {
+                                <span class="badge badge-primary text-white">UPCOMING</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-danger text-white">EXPIRED</span>
+                            }
+                        </p>
+
+                    </div>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <div class="card-footer">
+                        <p class="card-text">
+                            <a class="btn btn-success text-white float-left @((DateTime.Now > Model.EndDate)?"disabled":"")"
+                               asp-controller="Order" asp-action="AddItemToShoppingCart" asp-route-id="@Model.Id">
+                                @*here ToString("c") stand for cursy*@
+                                <i class="bi bi-cart-plus"></i> Add to Cart (@Model.Price.ToString("c"))
+                            </a>
+                            <a class="btn btn-secondary float-right text-white" asp-action="Index"><i class="bi bi-card-list"></i> Show All</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr />
+<div class="text-center">
+    <h4 class="text-info">Actors</h4>
+    <div class="row justify-content-center">
+        @foreach (var item in Model.Actors_Movies)
+        {
+            <div class="column px-2">
+                <img class="rounded-circle" src="@item.Actor.ProfilePictureUrl" style="max-width:150px" />
+                <br />
+                <a asp-controller="Actor" asp-action="Details" asp-route-id="@item.ActorId">@item.Actor.FullName</a>
+            </div>
+        }
+    </div>
+</div>
