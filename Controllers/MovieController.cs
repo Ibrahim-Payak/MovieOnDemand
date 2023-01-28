@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MovieOnDemand.ApplicationDbContext;
 using MovieOnDemand.Data.Interface;
+using MovieOnDemand.Data.Static;
 using MovieOnDemand.Data.ViewModel;
 using MovieOnDemand.Models;
 using System;
@@ -12,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace MovieOnDemand.Controllers
 {
+    [Authorize(Roles = UserRoles.Admin)]
     public class MovieController : Controller
     {
         private readonly IMoviesService _service;
@@ -21,6 +24,7 @@ namespace MovieOnDemand.Controllers
             _service = service;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Index(string searchString)
         {
             var movies = await _service.GetAllAsync(m => m.Cinema);
@@ -28,12 +32,13 @@ namespace MovieOnDemand.Controllers
             if (!string.IsNullOrEmpty(searchString))
             {
                 //if searching
-                movies = movies.Where(m => m.Name.Contains(searchString) || m.Description.Contains(searchString)).ToList();
+                movies = movies.Where(m => m.Name.ToLower().Contains(searchString.ToLower()) || m.Description.ToLower().Contains(searchString.ToLower())).ToList();
             }
 
             return View(movies);
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             var movie = await _service.GetMovieByIdAsync(id);

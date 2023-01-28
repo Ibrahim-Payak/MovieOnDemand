@@ -101,6 +101,8 @@ namespace MovieOnDemand.Models
             var items = await _db.ShoppingCartItems.Where(m => m.ShoppingCartId == ShoppingCartId).ToListAsync();
             _db.ShoppingCartItems.RemoveRange(items);
             await _db.SaveChangesAsync();
+
+            ShoppingCartItems = new List<ShoppingCartItem>();
         }
     }
 }

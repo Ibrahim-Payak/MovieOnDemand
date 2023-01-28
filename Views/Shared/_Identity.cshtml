@@ -1,0 +1,28 @@
+﻿@inject UserManager<ApplicationUser> userManager;
+
+@if (!User.Identity.IsAuthenticated)
+{
+    <a class="btn btn-outline-success mx-1" asp-controller="Account" asp-action="LogIn">
+        <i class="bi bi-box-arrow-in-right"></i> Log In
+    </a>
+
+    <a class="btn btn-outline-secondary mx-1" asp-controller="Account" asp-action="Register">
+        <i class="bi bi-person-plus"></i> Sign Up
+    </a>
+}
+else
+{
+    <div class="dropdown mx-1">
+        <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="bi bi-person-badge"></i> Hello @userManager.GetUserName(User)
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" asp-controller="Order" asp-action="Index"><i class="bi bi-list"></i> Orders</a>
+            <a class="dropdown-item" asp-controller="Account" asp-action="Users"><i class="bi bi-people"></i> Users</a>
+        </div>
+    </div>
+
+    <a class="btn btn-outline-danger mx-1" asp-controller="Account" asp-action="LogOut">
+        <i class="bi bi-box-arrow-in-left"></i> Log Out
+    </a>
+}

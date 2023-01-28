@@ -1,14 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MovieOnDemand.Data.Interface;
 using MovieOnDemand.Data.ViewModel;
 using MovieOnDemand.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace MovieOnDemand.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
         private readonly IMoviesService _moviesService;
@@ -74,8 +77,8 @@ namespace MovieOnDemand.Controllers
         public async Task<IActionResult> CompleteOrder()
         {
             var items = _shoppingCart.GetShoppingCartItems();
-            string userId = "";
-            string userEmail = "";
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            string userEmail = User.FindFirst(ClaimTypes.Email).Value;
 
             if (items.Count == 0) return View("NotFound");
 
@@ -86,10 +89,14 @@ namespace MovieOnDemand.Controllers
         }
 
         //to list all orders
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            string userId = "";
-            var list = await _orderService.GetOrdersByUserIdAsync(userId);
+            //to get login userid we will use claimtypes
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            string role = User.FindFirst(ClaimTypes.Role).Value;
+
+            var list = await _orderService.GetOrdersByUserIdAndRoleAsync(userId, role);
             return View(list);
         }
     }

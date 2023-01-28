@@ -49,8 +49,13 @@
 
     <div class="btn-group">
         @*<a class="btn btn-outline-info mx-2" asp-controller="Order" asp-action="CompleteOrder">Complete Your Order</a>*@
-        <div id="paypal-btn" class="mx-2"></div> |
-        <a class="btn btn-outline-success mx-2" asp-controller="movie" asp-action="Index">Add more Item</a>
+
+        @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+        {
+            <div id="paypal-btn" class="mx-2"></div>
+        }
+
+        | <a class="btn btn-outline-success mx-2" asp-controller="movie" asp-action="Index">Add more Item</a>
     </div>
 </div>
 

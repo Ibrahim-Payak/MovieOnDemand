@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieOnDemand.ApplicationDbContext;
 using MovieOnDemand.Data.Interface;
+using MovieOnDemand.Data.Static;
 using MovieOnDemand.Models;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace MovieOnDemand.Controllers
 {
+    [Authorize(Roles = UserRoles.Admin)]
     public class CinemaController : Controller
     {
         private readonly ICinemasService _service;
@@ -19,6 +22,7 @@ namespace MovieOnDemand.Controllers
             _service = service;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var cinemas = await _service.GetAllAsync();
@@ -42,6 +46,7 @@ namespace MovieOnDemand.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             var cinema = await _service.GetByIdAsync(id);

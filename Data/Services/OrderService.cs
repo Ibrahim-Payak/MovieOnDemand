@@ -18,12 +18,17 @@ namespace MovieOnDemand.Data.Services
             _db = db;
         }
 
-        public async Task<List<Order>> GetOrdersByUserIdAsync(string userId)
+        public async Task<List<Order>> GetOrdersByUserIdAndRoleAsync(string userId, string role)
         {
             var orders = await _db.Orders.Include(m => m.OrderItems)
                 .ThenInclude(m => m.Movie)
-                .Where(m => m.UserId == userId).ToListAsync();
+                .Include(m => m.User).ToListAsync();
 
+            if (role != "Admin")
+            {
+                //if it's user then only show that user order
+                orders = orders.Where(m => m.UserId == userId).ToList();
+            }
             return orders;
         }
 
